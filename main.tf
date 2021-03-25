@@ -11,13 +11,16 @@ variable "hosts" {
     default = ["1.1.1.1", "2.2.2.2"]
 }
 
+// nmap is not preinstalled by default
+// as ec2 might not have the internet access this might not work
+// workaround would be to subscribe to kali-linux in AWS marketplace
 variable "nmap_template" {
     default = <<EOF
         #!/bin/bash -v
         yum install nmap
         echo "--- SCAN START ---"
         echo "Simple nmap port scan for hosts %s"
-        nmap -Pn -n -sS -sV -sC %s
+        nmap -Pn -n -F -sS -sV -sC %s
         echo "--- SCAN END ---"
     EOF
 }
@@ -59,6 +62,8 @@ provider "aws" {
     region = var.region
 }
 
+// the only way to run scan without public IP on EC2
+// will cause terraform to rebuild the whole instance (takes looong time)
 data "cloudinit_config" "config" {
   gzip          = false
   base64_encode = true
