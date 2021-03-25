@@ -153,11 +153,10 @@ try:
         scan = get_output(ec2)
         print("[+] Completed scan for %s (%s/%s/%s)\n" % (ec2, o[0], o[1], o[2]))
         print(scan)
+        print('Cleaning up...')
+        t = Terraform(working_dir='.')
+        t.destroy(input=False, no_color=IsFlagged)
 except KeyboardInterrupt:
     print('Cleaning up...')
     t = Terraform(working_dir='.')
     t.destroy(input=False, no_color=IsFlagged)
-
-print('Cleaning up...')
-t = Terraform(working_dir='.')
-t.destroy(input=False, no_color=IsFlagged)
