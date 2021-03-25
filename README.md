@@ -14,6 +14,12 @@ This is merely a result of learning Terraform and AWS cloud API. Many functional
 - boto3
 - Django Framework
 
+### Setup
+- Install all mentioned dependencies
+- Setup AWS CLI credentials
+- Run `manage.py makemigrations` and `manage.py migrate --run-syncdb`
+- Run `main.py`
+
 ### Example output
 ```
 [i] Scanning for resources...
